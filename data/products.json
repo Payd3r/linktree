@@ -1,0 +1,139 @@
+{
+  "sections": {
+    "bestSelling": {
+      "guides": [
+        {
+          "id": "g1",
+          "title": "CV Professionale Australia",
+          "description": "Revisione completa, traduzione e adattamento del tuo curriculum agli standard australiani.",
+          "originalPrice": 85.00,
+          "price": 64.90,
+          "image": "/images/guides/1.jpg",
+          "ctaText": "Buy now",
+          "layout": "left"
+        },
+        {
+          "id": "g2",
+          "title": "E-Book: Vivere a Melbourne",
+          "description": "La guida definitiva per trasferirsi, trovare casa e lavoro nella città più vivibile al mondo.",
+          "originalPrice": 29.90,
+          "price": 19.90,
+          "image": "/images/guides/2.jpg",
+          "ctaText": "Buy now",
+          "layout": "right"
+        }
+      ],
+      "coaching": [
+        {
+          "id": "c1",
+          "title": "Consulenza MINIERE FIFO/DIDO",
+          "description": "Scopri come accedere al settore minerario in Australia con strategie mirate per ruoli FIFO e DIDO.",
+          "originalPrice": 89.90,
+          "price": 64.90,
+          "image": "/images/coaching/1.jpg",
+          "ctaText": "Prenota",
+          "layout": "left"
+        },
+        {
+          "id": "c2",
+          "title": "Consulenza 1:1 Australia",
+          "description": "Sessione privata di 30 minuti per pianificare il tuo trasferimento, visti e primi passi.",
+          "originalPrice": 59.00,
+          "price": 34.99,
+          "image": "/images/coaching/2.jpg",
+          "ctaText": "Prenota",
+          "layout": "right"
+        }
+      ],
+      "affiliates": [
+        {
+          "id": "a1",
+          "title": "Assicurazione Viaggio Heymondo",
+          "image": "/images/affiliates/1.jpeg",
+          "ctaText": "Sconto 10%",
+          "layout": "left",
+          "description": "Viaggia sicuro con il 10% di sconto sulla tua polizza."
+        },
+        {
+          "id": "a2",
+          "title": "Wise - Trasferimento Denaro",
+          "image": "/images/affiliates/1.jpeg",
+          "ctaText": "Iscriviti",
+          "layout": "left",
+          "description": "Invia denaro in Australia al tasso di cambio reale."
+        },
+        {
+          "id": "a3",
+          "title": "Amazon Travel Essentials",
+          "image": "/images/affiliates/2.jpg",
+          "ctaText": "Vedi lista",
+          "layout": "left",
+          "description": "I miei indispensabili per viaggiare comodi."
+        }
+      ]
+    },
+    "freeGuides": [
+      {
+        "id": "fg1",
+        "title": "Guida Gratuita: Primi Passi in Australia",
+        "description": "Una guida completa per iniziare la tua avventura in Australia: documenti necessari, prime settimane, banche e sistema sanitario.",
+        "price": 0,
+        "image": "/images/guides/1.jpg",
+        "ctaText": "Scarica gratis",
+        "layout": "left"
+      },
+      {
+        "id": "fg2",
+        "title": "Checklist: Trasferimento in Australia",
+        "description": "Lista di controllo completa per non dimenticare nulla prima e durante il trasferimento in Australia.",
+        "price": 0,
+        "image": "/images/guides/2.jpg",
+        "ctaText": "Scarica gratis",
+        "layout": "right"
+      },
+      {
+        "id": "fg3",
+        "title": "Glossario: Termini Australiani Essenziali",
+        "description": "Impara le espressioni e i termini più importanti per integrarti rapidamente nella cultura australiana.",
+        "price": 0,
+        "image": "/images/guides/1.jpg",
+        "ctaText": "Scarica gratis",
+        "layout": "left"
+      }
+    ],
+    "blog": [
+      {
+        "id": "b1",
+        "title": "Come Trovare Lavoro FIFO in Australia",
+        "description": "Guida completa ai lavori FIFO (Fly In Fly Out) nelle miniere australiane: requisiti, stipendi e come candidarsi.",
+        "image": "/images/coaching/1.jpg",
+        "ctaText": "Leggi articolo",
+        "layout": "left"
+      },
+      {
+        "id": "b2",
+        "title": "Costo della Vita a Melbourne: Guida Completa 2024",
+        "description": "Analisi dettagliata dei costi di affitto, trasporti, cibo e svago nella città più vivibile al mondo.",
+        "image": "/images/guides/2.jpg",
+        "ctaText": "Leggi articolo",
+        "layout": "right"
+      },
+      {
+        "id": "b3",
+        "title": "Visti per l'Australia: Quale Scegliere?",
+        "description": "Panoramica completa sui principali visti per trasferirsi in Australia: Working Holiday, Skilled Migration e Sponsorizzati.",
+        "image": "/images/coaching/2.jpg",
+        "ctaText": "Leggi articolo",
+        "layout": "left"
+      },
+      {
+        "id": "b4",
+        "title": "La Mia Esperienza: Da Milano a Melbourne in 30 Giorni",
+        "description": "Storia personale del mio trasferimento: difficoltà, sorprese e consigli pratici per chi vuole seguire lo stesso percorso.",
+        "image": "/images/guides/1.jpg",
+        "ctaText": "Leggi articolo",
+        "layout": "right"
+      }
+    ]
+  }
+}
