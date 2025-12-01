@@ -8,7 +8,7 @@ services:
       - web-proxy
     volumes:
       - ./backend/public/uploads:/app/backend/public/uploads
-      - ./backend/data/products.json:/app/backend/data/products.json
+      - ./backend/data:/app/backend/data
 
 networks:
   web-proxy:
