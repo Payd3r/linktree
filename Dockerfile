@@ -45,6 +45,7 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Crea le directory necessarie
 RUN mkdir -p /app/backend/public/uploads && \
+    mkdir -p /app/backend/data && \
     mkdir -p /var/log/supervisor && \
     mkdir -p /var/run
 

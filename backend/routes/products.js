@@ -9,7 +9,7 @@ const productsDataPath =
   process.env.PRODUCTS_DATA_PATH ||
   (isDev
     ? path.join(process.cwd(), 'data/products.json')
-    : process.env.PROD_PRODUCTS_DATA_PATH || '/app/data/products.json')
+    : process.env.PROD_PRODUCTS_DATA_PATH || '/app/backend/data/products.json')
 
 async function readProducts() {
   try {
