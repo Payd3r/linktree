@@ -6,6 +6,8 @@ services:
     restart: unless-stopped
     networks: 
       - web-proxy
+    volumes:
+      - ./backend/public/uploads:/app/backend/public/uploads
 
 networks:
   web-proxy:

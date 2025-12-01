@@ -1,27 +1,56 @@
-# Stage 1: Build the React/Vite application
-FROM node:20-slim AS build
+# Stage 1: Build Frontend
+FROM node:20-slim AS frontend-build
 
-WORKDIR /app
+WORKDIR /app/frontend
 
-# Copia i file di package e installa le dipendenze in modo affidabile
-COPY package*.json ./
+# Copia i file di package e installa le dipendenze
+COPY frontend/package*.json ./
 RUN npm install --verbose
 
-# Copia il resto del codice sorgente
-COPY . .
+# Copia il resto del codice sorgente frontend
+COPY frontend/ ./
 
-# Esegui il comando di build che genera i file statici
+# Esegui il build che genera i file statici in ../dist
 RUN npm run build
 
-# Stage 2: Serve the application with Nginx
+# Stage 2: Setup Backend
+FROM node:20-slim AS backend-setup
+
+WORKDIR /app/backend
+
+# Copia i file di package e installa le dipendenze
+COPY backend/package*.json ./
+RUN npm install --verbose
+
+# Copia il resto del codice sorgente backend
+COPY backend/ ./
+
+# Stage 3: Nginx + Supervisord
 FROM nginx:stable-alpine
 
-# Copia i file statici costruiti (Vite produce 'dist')
-COPY --from=build /app/dist /usr/share/nginx/html
+# Installa supervisord e node per eseguire il backend
+RUN apk add --no-cache supervisor nodejs npm
 
-# Copia la configurazione personalizzata di Nginx
+# Copia i file statici del frontend dal stage di build
+COPY --from=frontend-build /app/dist /usr/share/nginx/html
+
+# Copia il backend dal stage di setup
+COPY --from=backend-setup /app/backend /app/backend
+
+# Copia la configurazione di Nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+# Copia la configurazione di Supervisord
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Crea le directory necessarie
+RUN mkdir -p /app/backend/public/uploads && \
+    mkdir -p /var/log/supervisor && \
+    mkdir -p /var/run
+
+# Esponi la porta 80
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+# Avvia supervisord che gestirà nginx e il backend
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
