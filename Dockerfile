@@ -1,16 +1,20 @@
 # Stage 1: Build Frontend
 FROM node:20-slim AS frontend-build
 
-WORKDIR /app/frontend
+WORKDIR /app
 
 # Copia i file di package e installa le dipendenze
-COPY frontend/package*.json ./
-RUN npm install --verbose
+COPY frontend/package*.json ./frontend/
+RUN cd frontend && npm install --verbose
+
+# Copia la cartella public (necessaria per Vite publicDir)
+COPY public/ ./public/
 
 # Copia il resto del codice sorgente frontend
-COPY frontend/ ./
+COPY frontend/ ./frontend/
 
-# Esegui il build che genera i file statici in ../dist
+# Esegui il build che genera i file statici in dist/
+WORKDIR /app/frontend
 RUN npm run build
 
 # Stage 2: Setup Backend
