@@ -19,7 +19,16 @@ async function readProducts() {
     return []
   } catch (err) {
     if (err && err.code === 'ENOENT') {
-      return []
+      // Crea il file se non esiste
+      try {
+        const dir = path.dirname(productsDataPath)
+        await fs.mkdir(dir, { recursive: true })
+        await fs.writeFile(productsDataPath, JSON.stringify([], null, 2), 'utf-8')
+        return []
+      } catch (createErr) {
+        console.error('Errore nella creazione del file products.json:', createErr)
+        return []
+      }
     }
     throw err
   }
