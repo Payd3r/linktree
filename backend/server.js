@@ -23,8 +23,16 @@ async function initializeProductsFile() {
       : process.env.PROD_PRODUCTS_DATA_PATH || '/app/backend/data/products.json')
   
   try {
-    await fs.access(productsDataPath)
-    console.log(`File products.json trovato: ${productsDataPath}`)
+    // Verifica se esiste e se è un file o una directory
+    const stats = await fs.stat(productsDataPath)
+    if (stats.isDirectory()) {
+      console.warn(`products.json è una directory invece di un file, rimozione: ${productsDataPath}`)
+      await fs.rmdir(productsDataPath)
+      await fs.writeFile(productsDataPath, JSON.stringify([], null, 2), 'utf-8')
+      console.log(`File products.json creato dopo rimozione directory: ${productsDataPath}`)
+    } else {
+      console.log(`File products.json trovato: ${productsDataPath}`)
+    }
   } catch (err) {
     if (err.code === 'ENOENT') {
       try {

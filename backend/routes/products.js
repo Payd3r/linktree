@@ -13,6 +13,20 @@ const productsDataPath =
 
 async function readProducts() {
   try {
+    // Verifica se il path è una directory invece di un file (può succedere con Docker volumes)
+    try {
+      const stats = await fs.stat(productsDataPath)
+      if (stats.isDirectory()) {
+        console.warn(`products.json è una directory invece di un file, rimozione: ${productsDataPath}`)
+        await fs.rmdir(productsDataPath)
+        // Crea il file dopo aver rimosso la directory
+        await fs.writeFile(productsDataPath, JSON.stringify([], null, 2), 'utf-8')
+        return []
+      }
+    } catch (statErr) {
+      // Se stat fallisce, probabilmente il file non esiste, continuiamo
+    }
+    
     const content = await fs.readFile(productsDataPath, 'utf-8')
     // Se il file è vuoto, ritorna array vuoto
     if (!content || content.trim() === '') {
@@ -34,6 +48,18 @@ async function readProducts() {
         console.error('Errore nella creazione del file products.json:', createErr)
         console.error('Path tentato:', productsDataPath)
         console.error('Errore dettagliato:', createErr.message, createErr.stack)
+        return []
+      }
+    }
+    // Gestisci errori EISDIR (il path è una directory)
+    if (err && err.code === 'EISDIR') {
+      console.warn(`products.json è una directory, rimozione e ricreazione: ${productsDataPath}`)
+      try {
+        await fs.rmdir(productsDataPath)
+        await fs.writeFile(productsDataPath, JSON.stringify([], null, 2), 'utf-8')
+        return []
+      } catch (fixErr) {
+        console.error('Errore nella correzione di products.json:', fixErr)
         return []
       }
     }
@@ -59,7 +85,34 @@ async function readProducts() {
 }
 
 async function writeProducts(products) {
-  await fs.writeFile(productsDataPath, JSON.stringify(products, null, 2), 'utf-8')
+  try {
+    // Verifica se il path è una directory invece di un file
+    try {
+      const stats = await fs.stat(productsDataPath)
+      if (stats.isDirectory()) {
+        console.warn(`products.json è una directory invece di un file, rimozione: ${productsDataPath}`)
+        await fs.rmdir(productsDataPath)
+      }
+    } catch (statErr) {
+      // Se stat fallisce, probabilmente il file non esiste, continuiamo
+    }
+    
+    await fs.writeFile(productsDataPath, JSON.stringify(products, null, 2), 'utf-8')
+  } catch (err) {
+    // Gestisci errori EISDIR (il path è una directory)
+    if (err && err.code === 'EISDIR') {
+      console.warn(`products.json è una directory durante scrittura, rimozione e ricreazione: ${productsDataPath}`)
+      try {
+        await fs.rmdir(productsDataPath)
+        await fs.writeFile(productsDataPath, JSON.stringify(products, null, 2), 'utf-8')
+      } catch (fixErr) {
+        console.error('Errore nella correzione di products.json durante scrittura:', fixErr)
+        throw fixErr
+      }
+    } else {
+      throw err
+    }
+  }
 }
 
 function isValidSection(section) {
