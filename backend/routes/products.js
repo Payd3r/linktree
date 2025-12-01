@@ -14,6 +14,10 @@ const productsDataPath =
 async function readProducts() {
   try {
     const content = await fs.readFile(productsDataPath, 'utf-8')
+    // Se il file è vuoto, ritorna array vuoto
+    if (!content || content.trim() === '') {
+      return []
+    }
     const parsed = JSON.parse(content)
     if (Array.isArray(parsed)) return parsed
     return []
@@ -24,13 +28,33 @@ async function readProducts() {
         const dir = path.dirname(productsDataPath)
         await fs.mkdir(dir, { recursive: true })
         await fs.writeFile(productsDataPath, JSON.stringify([], null, 2), 'utf-8')
+        console.log(`File products.json creato in: ${productsDataPath}`)
         return []
       } catch (createErr) {
         console.error('Errore nella creazione del file products.json:', createErr)
+        console.error('Path tentato:', productsDataPath)
+        console.error('Errore dettagliato:', createErr.message, createErr.stack)
         return []
       }
     }
-    throw err
+    // Gestisci errori di parsing JSON
+    if (err instanceof SyntaxError) {
+      console.error('Errore di parsing JSON in products.json:', err.message)
+      // Prova a riscrivere il file con un array vuoto
+      try {
+        await fs.writeFile(productsDataPath, JSON.stringify([], null, 2), 'utf-8')
+        return []
+      } catch (writeErr) {
+        console.error('Errore nella riscrittura del file products.json:', writeErr)
+        return []
+      }
+    }
+    // Per qualsiasi altro errore, logga e ritorna array vuoto invece di lanciare
+    console.error('Errore inatteso in readProducts:', err)
+    console.error('Path:', productsDataPath)
+    console.error('Errore code:', err?.code)
+    console.error('Errore message:', err?.message)
+    return []
   }
 }
 
@@ -136,13 +160,17 @@ function validateProductPayload(body, { isUpdate = false } = {}) {
 
 router.get('/', async (req, res) => {
   try {
+    console.log('GET /api/products - Path file:', productsDataPath)
     const products = await readProducts()
+    console.log('GET /api/products - Products recuperati:', products?.length || 0)
     res.json({ success: true, products })
   } catch (error) {
     console.error('Errore nel recupero products:', error)
+    console.error('Stack trace:', error.stack)
     res.status(500).json({
       success: false,
-      error: 'Errore nel recupero dei products'
+      error: 'Errore nel recupero dei products',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
     })
   }
 })
