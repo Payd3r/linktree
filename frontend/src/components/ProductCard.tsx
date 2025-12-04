@@ -52,14 +52,14 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 flex flex-col md:flex-row w-full h-auto md:min-h-[21rem] md:h-[21rem] cursor-pointer group border border-gray-100">
       <div
-        className={`relative w-full aspect-[4/3] md:aspect-auto md:h-full sm:w-[40%] md:w-[35%] overflow-hidden flex-shrink-0 bg-[#f3dca3] ${
+        className={`relative w-full aspect-[4/3] sm:w-[40%] md:w-[35%] md:aspect-auto md:h-full overflow-hidden flex-shrink-0 ${
           isImageLeft ? 'md:order-1' : 'md:order-2'
         }`}
       >
         <img
           src={product.image}
           alt={product.title}
-          className="absolute inset-0 w-full h-full object-contain md:object-cover group-hover:scale-105 transition-transform duration-700"
+          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
         />
       </div>
 
