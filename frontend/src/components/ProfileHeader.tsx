@@ -57,7 +57,7 @@ export const ProfileHeader = () => {
           className="text-gray-500 text-sm mb-6 font-medium animate-fade-up"
           style={{ animationDelay: '400ms' }}
         >
-          Travel Consultant & Australia Expert
+          UGC Travel Creator & Coach
         </p>
 
         <div
