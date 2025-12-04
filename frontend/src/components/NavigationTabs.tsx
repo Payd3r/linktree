@@ -10,7 +10,7 @@ export const NavigationTabs = ({ activeTab, onTabChange }: NavigationTabsProps) 
 
   return (
     <div
-      className="w-full flex justify-center gap-2 mb-10 px-4 animate-fade-up"
+      className="w-full grid grid-cols-2 md:flex md:justify-center gap-2 mb-10 px-4 animate-fade-up"
       style={{ animationDelay: '180ms' }}
     >
       {tabs.map(tab => (

@@ -5,7 +5,7 @@ interface ProductCardProps {
   product: Product
 }
 
-const truncateDescription = (text: string | undefined, maxLength: number = 120): string => {
+const truncateDescription = (text: string | undefined, maxLength: number = 180): string => {
   if (!text) return ''
   if (text.length <= maxLength) return text
   return text.substring(0, maxLength).trim() + '...'
@@ -13,7 +13,7 @@ const truncateDescription = (text: string | undefined, maxLength: number = 120):
 
 export const ProductCard = ({ product }: ProductCardProps) => {
   const isImageLeft = product.layout === 'left'
-  const truncatedDescription = truncateDescription(product.description, 120)
+  const truncatedDescription = truncateDescription(product.description, 180)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const [isTruncated, setIsTruncated] = useState(false)
 

@@ -6,14 +6,14 @@ interface AffiliateCardProps {
   product: Product
 }
 
-const truncateDescription = (text: string | undefined, maxLength: number = 60): string => {
+const truncateDescription = (text: string | undefined, maxLength: number = 100): string => {
   if (!text) return ''
   if (text.length <= maxLength) return text
   return text.substring(0, maxLength).trim() + '...'
 }
 
 export const AffiliateCard = ({ product }: AffiliateCardProps) => {
-  const truncatedDescription = truncateDescription(product.description, 60)
+  const truncatedDescription = truncateDescription(product.description, 100)
 
   return (
     <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex items-center h-24 w-full cursor-pointer border border-gray-100 group active:scale-[0.99]">
