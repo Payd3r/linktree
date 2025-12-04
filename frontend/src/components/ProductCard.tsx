@@ -50,10 +50,10 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   }, [product.title])
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 flex flex-row min-h-[21rem] h-[21rem] w-full cursor-pointer group border border-gray-100">
+    <div className="bg-white rounded-2xl overflow-hidden shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 flex flex-col md:flex-row w-full h-auto md:min-h-[21rem] md:h-[21rem] cursor-pointer group border border-gray-100">
       <div
-        className={`relative w-[35%] sm:w-[40%] overflow-hidden flex-shrink-0 ${
-          isImageLeft ? 'order-1' : 'order-2'
+        className={`relative w-full h-48 md:h-auto sm:w-[40%] md:w-[35%] overflow-hidden flex-shrink-0 ${
+          isImageLeft ? 'md:order-1' : 'md:order-2'
         }`}
       >
         <img
@@ -65,7 +65,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
       <div
         className={`flex-1 p-5 flex flex-col justify-between overflow-hidden min-h-0 ${
-          isImageLeft ? 'order-2' : 'order-1'
+          isImageLeft ? 'md:order-2' : 'md:order-1'
         }`}
       >
         <div className="min-w-0 flex-shrink">
