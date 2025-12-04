@@ -5,7 +5,7 @@ interface ProductCardProps {
   product: Product
 }
 
-const truncateDescription = (text: string | undefined, maxLength: number = 240): string => {
+const truncateDescription = (text: string | undefined, maxLength: number = 320): string => {
   if (!text) return ''
   if (text.length <= maxLength) return text
   return text.substring(0, maxLength).trim() + '...'
@@ -13,7 +13,7 @@ const truncateDescription = (text: string | undefined, maxLength: number = 240):
 
 export const ProductCard = ({ product }: ProductCardProps) => {
   const isImageLeft = product.layout === 'left'
-  const truncatedDescription = truncateDescription(product.description, 240)
+  const truncatedDescription = truncateDescription(product.description, 320)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const [isTruncated, setIsTruncated] = useState(false)
 
@@ -50,7 +50,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   }, [product.title])
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 flex flex-row min-h-[19rem] h-[19rem] w-full cursor-pointer group border border-gray-100">
+    <div className="bg-white rounded-2xl overflow-hidden shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 flex flex-row min-h-[21rem] h-[21rem] w-full cursor-pointer group border border-gray-100">
       <div
         className={`relative w-[35%] sm:w-[40%] overflow-hidden flex-shrink-0 ${
           isImageLeft ? 'order-1' : 'order-2'
@@ -76,22 +76,27 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             {product.title}
           </h3>
 
-          <p className="text-gray-500 text-xs leading-relaxed mb-3 line-clamp-4">
+          <p className="text-gray-500 text-xs leading-relaxed mb-3 line-clamp-5">
             {truncatedDescription}
           </p>
         </div>
 
         <div className="flex-shrink-0">
-          {(product.priceStart !== undefined || product.priceEnd !== undefined) && (
+          {((product.priceStart !== undefined && product.priceStart > 0) || 
+            (product.priceEnd !== undefined && product.priceEnd > 0)) && (
             <div className="flex items-baseline gap-2 mb-3">
               {product.priceStart !== undefined && product.priceEnd !== undefined ? (
                 <>
-                  <span className="text-gray-400 text-sm line-through decoration-gray-400 decoration-1">
-                    €{product.priceStart.toFixed(2)}
-                  </span>
-                  <span className="text-xl font-bold text-gray-900">
-                    €{product.priceEnd.toFixed(2)}
-                  </span>
+                  {product.priceStart > 0 && (
+                    <span className="text-gray-400 text-sm line-through decoration-gray-400 decoration-1">
+                      €{product.priceStart.toFixed(2)}
+                    </span>
+                  )}
+                  {product.priceEnd > 0 && (
+                    <span className="text-xl font-bold text-gray-900">
+                      €{product.priceEnd.toFixed(2)}
+                    </span>
+                  )}
                 </>
               ) : (
                 <span className="text-xl font-bold text-gray-900">
