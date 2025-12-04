@@ -116,7 +116,7 @@ async function writeProducts(products) {
 }
 
 function isValidSection(section) {
-  return ['bestselling', 'freeguides', 'blog'].includes(section)
+  return ['bestselling', 'freeguides', 'blog', 'portfolio'].includes(section)
 }
 
 function isValidCategory(category) {
@@ -141,7 +141,7 @@ function validateProductPayload(body, { isUpdate = false } = {}) {
 
   if (!isUpdate || section !== undefined) {
     if (!section || !isValidSection(section)) {
-      errors.push('Sezione non valida. Valori ammessi: bestselling, guides, coaching, affiliates')
+      errors.push('Sezione non valida. Valori ammessi: bestselling, freeguides, blog, portfolio')
     }
   }
 

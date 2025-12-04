@@ -16,7 +16,8 @@ type CategoryOption = {
 const sectionOptions: SectionOption[] = [
   { value: 'bestselling', label: 'Best Selling' },
   { value: 'freeguides', label: 'Free Guides' },
-  { value: 'blog', label: 'Blog' }
+  { value: 'blog', label: 'Blog' },
+  { value: 'portfolio', label: 'Portfolio' }
 ]
 
 const categoryOptions: CategoryOption[] = [

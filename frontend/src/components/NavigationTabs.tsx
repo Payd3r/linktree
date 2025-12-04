@@ -6,7 +6,7 @@ interface NavigationTabsProps {
 }
 
 export const NavigationTabs = ({ activeTab, onTabChange }: NavigationTabsProps) => {
-  const tabs = ['Best Selling', 'Free Guides', 'Blog']
+  const tabs = ['Best Selling', 'Free Guides', 'Blog', 'Portfolio']
 
   return (
     <div

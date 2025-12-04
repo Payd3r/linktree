@@ -1,4 +1,4 @@
-export type ProductSection = 'bestselling' | 'freeguides' | 'blog'
+export type ProductSection = 'bestselling' | 'freeguides' | 'blog' | 'portfolio'
 
 export type ProductCategory = 'guides' | 'coaching' | 'affiliates'
 

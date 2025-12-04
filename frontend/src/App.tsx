@@ -37,7 +37,8 @@ const App = () => {
     const map: { [key: string]: string } = {
       'Best Selling': 'bestSelling',
       'Free Guides': 'freeGuides',
-      Blog: 'blog'
+      Blog: 'blog',
+      Portfolio: 'portfolio'
     }
     return map[tab] || 'bestSelling'
   }
@@ -67,6 +68,11 @@ const App = () => {
 
     if (sectionKey === 'blog') {
       const items = backendProducts.filter(p => p.section === 'blog')
+      return { items }
+    }
+
+    if (sectionKey === 'portfolio') {
+      const items = backendProducts.filter(p => p.section === 'portfolio')
       return { items }
     }
 

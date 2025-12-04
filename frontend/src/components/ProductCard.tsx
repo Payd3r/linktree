@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import type { Product } from '../shared/productTypes'
 
 interface ProductCardProps {
@@ -14,6 +14,40 @@ const truncateDescription = (text: string | undefined, maxLength: number = 120):
 export const ProductCard = ({ product }: ProductCardProps) => {
   const isImageLeft = product.layout === 'left'
   const truncatedDescription = truncateDescription(product.description, 120)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const [isTruncated, setIsTruncated] = useState(false)
+
+  useEffect(() => {
+    const checkTruncation = () => {
+      if (titleRef.current) {
+        // Applica temporaneamente line-clamp-2 per controllare se è necessario
+        const hasLineClamp = titleRef.current.classList.contains('line-clamp-2')
+        if (!hasLineClamp) {
+          titleRef.current.classList.add('line-clamp-2')
+        }
+        
+        // Controlla se il testo è effettivamente troncato
+        const isOverflowing = titleRef.current.scrollHeight > titleRef.current.clientHeight
+        
+        // Se non è troncato, rimuovi line-clamp-2
+        if (!isOverflowing && hasLineClamp) {
+          titleRef.current.classList.remove('line-clamp-2')
+        } else if (isOverflowing && !hasLineClamp) {
+          titleRef.current.classList.add('line-clamp-2')
+        }
+        
+        setIsTruncated(isOverflowing)
+      }
+    }
+
+    // Usa un piccolo delay per assicurarsi che il DOM sia renderizzato
+    const timeoutId = setTimeout(checkTruncation, 0)
+    window.addEventListener('resize', checkTruncation)
+    return () => {
+      clearTimeout(timeoutId)
+      window.removeEventListener('resize', checkTruncation)
+    }
+  }, [product.title])
 
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 flex flex-row min-h-[17rem] h-[17rem] w-full cursor-pointer group border border-gray-100">
@@ -35,11 +69,14 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         }`}
       >
         <div className="min-w-0 flex-shrink">
-          <h3 className="text-gray-900 font-bold text-lg leading-tight mb-2 line-clamp-2">
+          <h3 
+            ref={titleRef}
+            className="text-gray-900 font-bold text-base leading-tight mb-2"
+          >
             {product.title}
           </h3>
 
-          <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-3 line-clamp-3">
+          <p className="text-gray-500 text-xs leading-relaxed mb-3 line-clamp-3">
             {truncatedDescription}
           </p>
         </div>
